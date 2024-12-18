@@ -23,15 +23,18 @@ culane_row_anchor = [121, 131, 141, 150, 160, 170, 180, 189, 199, 209, 219, 228,
 class ModelType(Enum):
 	TUSIMPLE = 0
 	CULANE = 1
+	CURVELANE = 2 # adding new model type for curvelane 
 
 class ModelConfig():
 
 	def __init__(self, model_type):
 
-		if model_type == ModelType.TUSIMPLE:
+		if model_type == 0:
 			self.init_tusimple_config()
-		else:
+		else if model_type == 1:
 			self.init_culane_config()
+		else: 
+			self.init_curvelane_config() #activates if the model type is 2
 
 	def init_tusimple_config(self):
 		self.img_w = 1280
@@ -46,6 +49,13 @@ class ModelConfig():
 		self.row_anchor = culane_row_anchor
 		self.griding_num = 200
 		self.cls_num_per_lane = 18
+
+	def init_curvelane_config(self):
+		self.img_w = 1600
+		self.img_h = 800
+		self.row_anchor = curvelane_row_anchor
+		self.griding_num = 200 # suggestion based from ChatGPT (Couldn't find in version 2 repo)
+		self.cls_num_per_lane = 56 # same as this
 
 class UltrafastLaneDetector():
 
